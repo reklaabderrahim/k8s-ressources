@@ -1,0 +1,34 @@
+frontend http_front
+  bind *:80
+  stats uri /haproxy?stats
+  default_backend http_back
+
+
+backend http_front
+  balance roundrobin
+  server kube 192.168.50.12:80
+  server kube 192.168.50.13:80
+
+
+frontend Local_Server
+    bind *:80
+    mode http
+    default_backend http_back
+
+backend http_back
+    mode http
+    balance roundrobin
+    server kube 192.168.50.12:80
+    server kube 192.168.50.13:80
+
+listen stats *:1936
+    stats enable
+    stats hide-version
+    stats refresh 30s
+    stats show-node
+    stats auth username:password
+    stats uri  /stats
+    
+    
+    
+    https://tecadmin.net/how-to-setup-haproxy-load-balancing-on-ubuntu-linuxmint/
