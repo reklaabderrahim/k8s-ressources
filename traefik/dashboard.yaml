@@ -3,12 +3,12 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: dashboard
-  namespace: traefik-ingress
+  namespace: traefik
 spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`traefik.com`)
+    - match: Host(`traefik.fr`)
       kind: Rule
       services:
         - name: api@internal
